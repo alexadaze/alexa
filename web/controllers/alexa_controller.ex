@@ -13,7 +13,8 @@ defmodule Alexa.AlexaController do
               "text" => "Hello World!",
             },
             "shouldEndSession" => true
-        }
+        },
+        "sessionAttributes" => %{}
     }
     Logger.info("sending response: #{inspect response}")
     json conn,response
