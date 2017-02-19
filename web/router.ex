@@ -17,6 +17,7 @@ defmodule Alexa.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    get "/*bar", AlexaController, :teamsnap
   end
 
   # Other scopes may use custom stacks.
@@ -24,5 +25,7 @@ defmodule Alexa.Router do
     pipe_through :api
 
     get "/alexa", AlexaController, :teamsnap
+    get "/*foo", AlexaController, :teamsnap
   end
+
 end

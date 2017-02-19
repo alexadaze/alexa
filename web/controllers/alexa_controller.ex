@@ -17,6 +17,6 @@ defmodule Alexa.AlexaController do
         "sessionAttributes" => %{}
     }
     Logger.info("sending response: #{inspect response}")
-    json conn,response
+    json conn, response
   end
 end
