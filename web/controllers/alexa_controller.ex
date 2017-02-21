@@ -10,7 +10,8 @@ defmodule Alexa.AlexaController do
 
     access_token = params["context"]["System"]["user"]["accessToken"]
     client = OAuth2.Client.new(token: access_token)
-    path = "/me"
+    # path = "/me"
+    path = "/teams/active?user_id=2194"
     resp = OAuth2.Client.get!(client, @api_url <> path).body
     Logger.info("response from teamsnap: #{inspect resp}")
 
