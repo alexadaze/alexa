@@ -12,11 +12,15 @@ defmodule Alexa.AlexaController do
               "type" => "PlainText",
               "text" => "Hello World!",
             },
+            # "card" => %{
+            #   "type" => "Simple",
+            #   "title" => "Team Snap by Cobenian",
+            #   "content" => "Your team snap information will go here."
+            # },
             "card" => %{
-              "type" => "Simple",
-              "title" => "Team Snap by Cobenian",
-              "content" => "Your team snap information will go here."
-            },
+              "type" => "LinkAccount",
+
+            }
             "shouldEndSession" => true
         },
         "sessionAttributes" => %{}
