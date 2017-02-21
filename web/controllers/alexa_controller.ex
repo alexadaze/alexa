@@ -20,7 +20,7 @@ defmodule Alexa.AlexaController do
                 case map do
                     %{"name" => "name"} -> true
                     _ -> false
-                end,
+                end
               end,
               fn map ->
                 map["value"]
