@@ -3,8 +3,17 @@ defmodule Alexa.AlexaController do
 
   require Logger
 
+  @api_url "https://api.teamsnap.com/v3"
+
   def teamsnap(conn, params) do
     Logger.info("received request: #{inspect params}")
+
+    access_token = params["context"]["System"]["user"]["accessToken"]
+    client = OAuth2.Client.new(token: access_token)
+    path = "/me"
+    resp = OAuth2.Client.get!(client, @api_url <> path).body
+    Logger.info("response from teamsnap: #{inspect resp}")
+
     response = %{
         "version" => "1.0",
         "response" => %{
@@ -17,10 +26,9 @@ defmodule Alexa.AlexaController do
             #   "title" => "Team Snap by Cobenian",
             #   "content" => "Your team snap information will go here."
             # },
-            "card" => %{
-              "type" => "LinkAccount",
-
-            },
+            # "card" => %{
+            #   "type" => "LinkAccount",
+            # },
             "shouldEndSession" => true
         },
         "sessionAttributes" => %{}
