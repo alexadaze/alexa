@@ -13,8 +13,12 @@ defmodule Alexa.AlexaController do
     # path = "/me"
     path = "/teams/active?user_id=2194"
     resp = OAuth2.Client.get!(client, @api_url <> path).body
-    Logger.info("response from teamsnap: #{inspect resp}")
-    teams = resp["collection"]["items"]["data"]
+    # Logger.info("response from teamsnap: #{inspect resp}")
+    teams = resp["collection"]["items"]
+            |> Enum.map(fn item ->
+              item["data"]
+            end)
+    # teams = resp["collection"]["items"]["data"]
     Logger.info("teams are: #{inspect teams}")
 
     response = %{
