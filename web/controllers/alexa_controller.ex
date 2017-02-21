@@ -26,7 +26,7 @@ defmodule Alexa.AlexaController do
                 map["value"]
               end
               )
-            end)
+            end) |> List.flatten
     # teams = resp["collection"]["items"]["data"]
     Logger.info("teams are: #{inspect teams}")
 
@@ -35,7 +35,7 @@ defmodule Alexa.AlexaController do
         "response" => %{
             "outputSpeech" => %{
               "type" => "PlainText",
-              "text" => "Hello World!",
+              "text" => "Your teams are: #{inspect Enum.join(teams, ",")}",
             },
             # "card" => %{
             #   "type" => "Simple",
