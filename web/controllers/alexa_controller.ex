@@ -16,7 +16,16 @@ defmodule Alexa.AlexaController do
     # Logger.info("response from teamsnap: #{inspect resp}")
     teams = resp["collection"]["items"]
             |> Enum.map(fn item ->
-              item["data"]
+              item["data"] |> Enum.filter_map(fn map ->
+                case map do
+                    %{"name" => "name"} -> true
+                    _ -> false
+                end,
+              end,
+              fn map ->
+                map["value"]
+              end
+              )
             end)
     # teams = resp["collection"]["items"]["data"]
     Logger.info("teams are: #{inspect teams}")
