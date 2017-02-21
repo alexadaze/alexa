@@ -14,6 +14,8 @@ defmodule Alexa.AlexaController do
     path = "/teams/active?user_id=2194"
     resp = OAuth2.Client.get!(client, @api_url <> path).body
     Logger.info("response from teamsnap: #{inspect resp}")
+    teams = resp["collection"]["items"]["data"]
+    Logger.info("teams are: #{inspect teams}")
 
     response = %{
         "version" => "1.0",
