@@ -20,7 +20,7 @@ defmodule Alexa.AlexaController do
             "card" => %{
               "type" => "LinkAccount",
 
-            }
+            },
             "shouldEndSession" => true
         },
         "sessionAttributes" => %{}
