@@ -63,7 +63,7 @@ defmodule Alexa.AlexaController do
                     end
                     )
                   end) |> List.flatten
-        end)
+        end) |> List.flatten
         Logger.info("teams are: #{inspect teams}")
         # Logger.info("response is #{inspect resp}")
         %{
@@ -71,7 +71,7 @@ defmodule Alexa.AlexaController do
             "response" => %{
                 "outputSpeech" => %{
                   "type" => "PlainText",
-                  "text" => "Your teams are: coming soon!",
+                  "text" => "Your teams are: #{Enum.join(teams, ", ")}",
                 },
                 "shouldEndSession" => true
             },
