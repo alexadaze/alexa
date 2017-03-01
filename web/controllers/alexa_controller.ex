@@ -30,7 +30,9 @@ defmodule Alexa.AlexaController do
         client = OAuth2.Client.new(token: access_token)
         path = "/me"
         resp = OAuth2.Client.get!(client, @api_url <> path).body
-        Logger.info("response is #{inspect resp}")
+        links = get_in(resp, ["collection", "links"])
+        Logger.info("links are #{inspect links}")
+        # Logger.info("response is #{inspect resp}")
         %{
             "version" => "1.0",
             "response" => %{
