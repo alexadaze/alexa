@@ -30,8 +30,38 @@ defmodule Alexa.AlexaController do
         client = OAuth2.Client.new(token: access_token)
         path = "/me"
         resp = OAuth2.Client.get!(client, @api_url <> path).body
-        links = get_in(resp, ["collection", "links"])
-        Logger.info("links are #{inspect links}")
+        items = get_in(resp, ["collection", "items"])
+        Logger.info("links are #{inspect items}")
+        active_team_urls =
+          items |> Enum.map(fn item ->
+            item["links"] |> Enum.filter_map(fn link ->
+              case link ->
+                %{"rel" => "active_teams"} -> true
+                _ -> false
+            end,
+            fn link ->
+              link["href"]
+            end
+            )
+          end) |> List.flatten
+        Logger.info("active team urls: #{inspect active_team_urls}")
+        teams =
+          active_team_urls |> Enum.map(fn url ->
+                  resp["collection"]["items"]
+                  |> Enum.map(fn item ->
+                    item["data"] |> Enum.filter_map(fn map ->
+                      case map do
+                          %{"name" => "name"} -> true
+                          _ -> false
+                      end
+                    end,
+                    fn map ->
+                      map["value"]
+                    end
+                    )
+                  end) |> List.flatten
+        end)
+        Logger.info("teams are: #{inspect teams}")
         # Logger.info("response is #{inspect resp}")
         %{
             "version" => "1.0",
