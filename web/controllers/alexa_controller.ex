@@ -17,6 +17,8 @@ defmodule Alexa.AlexaController do
           case get_in(params, ["request", "intent", "name"]) do
             "Teams" ->
               teams_response(access_token)
+            "Schedule" ->
+              schedule_response(access_token, get_in(params, ["request", "intent", "slots"]))
             _ ->
               unknown_response()
           end
@@ -49,6 +51,20 @@ defmodule Alexa.AlexaController do
             "outputSpeech" => %{
               "type" => "PlainText",
               "text" => "I have no idea what you just said. Ask me again, but be more clear next time!",
+            },
+            "shouldEndSession" => true
+        },
+        "sessionAttributes" => %{}
+    }
+  end
+
+  def schedule_response(access_token, %{"Date" => %{"name" => "Date", "value" => date}}) do
+    %{
+        "version" => "1.0",
+        "response" => %{
+            "outputSpeech" => %{
+              "type" => "PlainText",
+              "text" => "You would like me to tell you your schedule for #{inspect date}, wouldn't you?",
             },
             "shouldEndSession" => true
         },
