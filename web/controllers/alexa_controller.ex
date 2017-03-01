@@ -35,7 +35,7 @@ defmodule Alexa.AlexaController do
         active_team_urls =
           items |> Enum.map(fn item ->
             item["links"] |> Enum.filter_map(fn link ->
-              case link ->
+              case link do
                 %{"rel" => "active_teams"} -> true
                 _ -> false
               end
