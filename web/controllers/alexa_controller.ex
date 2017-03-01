@@ -48,6 +48,9 @@ defmodule Alexa.AlexaController do
         Logger.info("active team urls: #{inspect active_team_urls}")
         teams =
           active_team_urls |> Enum.map(fn url ->
+                  path = url
+                  resp = OAuth2.Client.get!(client, @api_url <> path).body
+                  Logger.info("response for #{inspect path} is #{inspect resp}")
                   resp["collection"]["items"]
                   |> Enum.map(fn item ->
                     item["data"] |> Enum.filter_map(fn map ->
