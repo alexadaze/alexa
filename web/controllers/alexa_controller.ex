@@ -38,6 +38,7 @@ defmodule Alexa.AlexaController do
               case link ->
                 %{"rel" => "active_teams"} -> true
                 _ -> false
+              end
             end,
             fn link ->
               link["href"]
