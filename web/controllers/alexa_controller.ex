@@ -14,7 +14,12 @@ defmodule Alexa.AlexaController do
           login_response()
         access_token ->
           Logger.info("will use access token: #{inspect access_token}")
-          teams_response(access_token)
+          case get_in(params, ["request", "intent", "name"]) do
+            "Teams" ->
+              teams_response(access_token)
+            _ ->
+              unknown_response()
+          end
       end
     Logger.info("sending response: #{inspect response}")
     json conn, response
@@ -30,6 +35,20 @@ defmodule Alexa.AlexaController do
             },
             "card" => %{
               "type" => "LinkAccount",
+            },
+            "shouldEndSession" => true
+        },
+        "sessionAttributes" => %{}
+    }
+  end
+
+  def unknown_response() do
+    %{
+        "version" => "1.0",
+        "response" => %{
+            "outputSpeech" => %{
+              "type" => "PlainText",
+              "text" => "I have no idea what you just said. Ask me again, but be more clear next time!",
             },
             "shouldEndSession" => true
         },
